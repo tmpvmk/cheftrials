@@ -1,0 +1,42 @@
+1.Download the latest Chef server
+sudo wget https://packages.chef.io/files/stable/chef-server/12.18.14/ubuntu/18.04/chef-server-core_12.18.14-1_amd64.deb
+
+2.Install the server package 
+sudo dpkg -i chef-server-core_*.deb
+
+3.Run chef-server-ctl to start the Chef server services
+sudo chef-server-ctl reconfigure
+
+4.Check the chef server running status 
+sudo chef-server-ctl status
+
+5.To link workstations and nodes to the Chef server, create an administrator with associated RSA private keys.
+
+5a.From home directory, create a .chef directory to store the keys
+mkdir .chef
+
+5b.Use chef-server-ctl to create a user. 
+sudo chef-server-ctl user-create chefadmin Cheffirstname Cheflastname  chefadmin@email.com 'password' --filename ~/.chef/chefadmin.pem
+
+5c.View the list of all users on Chef server
+sudo chef-server-ctl user-list
+
+6.To link workstations and nodes to the Chef server, create an organization with associated RSA private keys.
+
+6a.Use chef-server-ctl to create an organization
+sudo chef-server-ctl org-create chef-on-ubuntu "Chef Infrastructure on Ubuntu 18.04" --association_user chefadmin --filename ~/.chef/chef-on-ubuntu.pem
+
+6b.list of all organizations on Chef server
+sudo chef-server-ctl org-list
+
+7.Install ssh server
+sudo apt install openssh-server
+
+8.Check the status
+sudo systemctl status sshd
+
+9. Optional....If you wish to restart the ssh server..
+sudo systemctl restart ssh
+
+10. Open ssh port 22 for incoming traffic 
+sudo ufw allow ssh
