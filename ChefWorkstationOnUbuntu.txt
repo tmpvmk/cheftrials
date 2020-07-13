@@ -1,0 +1,32 @@
+1.Download the latest Chef Workstation
+sudo wget  https://packages.chef.io/files/stable/chef-workstation/0.2.43/ubuntu/18.04/chef-workstation_0.2.43-1_amd64.deb
+
+2.Install Chef Workstation
+sudo dpkg -i chef-workstation_*.deb
+
+3.Create the Chef repository, say 'chef-repo' directory will store your Chef cookbooks and other related files
+sudo chef generate repo chef-repo
+
+4.Create a .chef subdirectory
+sudo mkdir ~/chef-repo/.chef
+cd chef-repo
+
+5.Generate a RSA key-pair on the workstation server. This key-pair will be used to gain access to the Chef server and then transfer their .pem files
+
+ssh-keygen -b 4096
+
+6.
+sudo ssh-copy-id ubuntu@172.31.27.29
+
+7.
+scp ubuntu@172.31.27.29:~/.chef/*.pem ~/chef-repo/.chef/
+
+8.
+ls ~/chef-repo/.chef
+
+9.
+chef generate cookbook chef-first-cookbook
+
+10.
+chef generate app chef-repo
+cd ~/chef-repo
